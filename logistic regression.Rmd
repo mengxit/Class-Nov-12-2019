@@ -1,0 +1,37 @@
+---
+title: "logistic regression"
+author: "Mengxi Tan"
+date: "11/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(googlesheets4)
+library(tidyverse)
+
+# read any public google sheets
+sheets_deauth()
+```
+
+
+```{r class}
+# read the google sheets
+election <- read_sheet("13NhlT-Oik5P4NOKRWwrJ7xZQlddFNk81HHEw9wkWglM")
+
+# income: categorical variables for five different categories
+# partisanship and dvote
+# do we need to even jitter partisanship? just the dvote
+
+ggplot(election, aes(partisanship, dvote)) + geom_jitter(height = 0.2) + geom_smooth(method = "lm", se = FALSE)
+
+# linear regression
+mod <- lm(data = election, dvote ~ partisanship)
+
+# logistic regression
+mod_logistic <- glm(data = election, dvote ~partisanship)
+
+```
+
+
