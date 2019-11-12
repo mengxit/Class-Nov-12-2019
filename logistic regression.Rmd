@@ -32,6 +32,15 @@ mod <- lm(data = election, dvote ~ partisanship)
 # logistic regression
 mod_logistic <- glm(data = election, dvote ~partisanship)
 
+#map logistic regression, create log line in geom_smooth
+ggplot(mod_logistic, aes(partisanship, dvote)) +
+  geom_jitter(height = 0.2) +
+  geom_smooth(method = "glm", method.args = list(family = "binomial"))
+
+#We can see that the change in partisanship on the high end doesn't change dvote much, but change in partisanship on the low end has a larger effect. 
+
+#Why doesn't the regression line approach zero? There are still 3 data points that responded as -1.5 partisanship and voted democrat, whereas if you look to the right (towards 1 on the log regression) there isn't a respondent that votes republican and is more than 3 for partisanship. 
+
 ```
 
 
